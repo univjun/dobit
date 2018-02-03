@@ -127,3 +127,6 @@ CREATE TABLE bo_free_comment_re
     ALTER TABLE bo_free_comment_re ADD master_idx BIGINT AFTER comment_idx;
     ALTER TABLE bo_free_master ADD down BIGINT NOT NULL DEFAULT 0 AFTER up;
     ALTER TABLE bo_free_master DROP COLUMN down;
+
+
+    안녕하십니까?
