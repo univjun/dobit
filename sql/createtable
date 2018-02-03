@@ -128,7 +128,16 @@ CREATE TABLE bo_free_comment_re
     ALTER TABLE bo_free_master ADD down BIGINT NOT NULL DEFAULT 0 AFTER up;
     ALTER TABLE bo_free_master DROP COLUMN down;
 
+<<<<<<< HEAD
 54y4yryrtyhrtyrtyrty
+=======
+
+<<<<<<< HEAD
+>>>>>>> b6bdb1ad368a125ce0bf13abb4d237ff2cfc9e12
+v1
+v2
+=======
+>>>>>>> parent of 6b22702... v1
 
 
-
+    
