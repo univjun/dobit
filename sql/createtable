@@ -128,6 +128,8 @@ CREATE TABLE bo_free_comment_re
     ALTER TABLE bo_free_master ADD down BIGINT NOT NULL DEFAULT 0 AFTER up;
     ALTER TABLE bo_free_master DROP COLUMN down;
 
+    1
     안녕하십니까?
     산민아 나도 올렸어
+    2
     3
