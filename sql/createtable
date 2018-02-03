@@ -126,6 +126,7 @@ CREATE TABLE bo_free_comment_re
 
     ALTER TABLE bo_free_comment_re ADD master_idx BIGINT AFTER comment_idx;
     ALTER TABLE bo_free_master ADD down BIGINT NOT NULL DEFAULT 0 AFTER up;
+<<<<<<< HEAD
     ALTER TABLE bo_free_master DROP COLUMN down;
 
     1
@@ -135,3 +136,6 @@ CREATE TABLE bo_free_comment_re
     3
     4
     5
+=======
+    ALTER TABLE bo_free_master DROP COLUMN down;
+>>>>>>> parent of 3bf54b7... test -samin
