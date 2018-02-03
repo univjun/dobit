@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3cfd0de2-8a6b-4a6f-8b54-4b30e3dc5482" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sql/createtable" afterPath="$PROJECT_DIR$/sql/createtable" />
-    </list>
+    <list default="true" id="3cfd0de2-8a6b-4a6f-8b54-4b30e3dc5482" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -338,12 +336,12 @@
       <workItem from="1517221231430" duration="3171000" />
       <workItem from="1517405359257" duration="927000" />
       <workItem from="1517647338924" duration="7632000" />
-      <workItem from="1517657880602" duration="1333000" />
+      <workItem from="1517657880602" duration="1372000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="331029000" />
+    <option name="totallyTimeSpent" value="331068000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
