@@ -89,8 +89,13 @@
       <file leaf-file-name="createtable" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/sql/createtable">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="361">
               <caret line="114" column="46" lean-forward="true" selection-start-line="114" selection-start-column="46" selection-end-line="114" selection-end-column="46" />
+=======
+            <state relative-caret-position="380">
+              <caret line="111" column="43" lean-forward="true" selection-start-line="111" selection-start-column="43" selection-end-line="111" selection-end-column="43" />
+>>>>>>> parent of 958afed... 수정1
               <folding />
             </state>
           </provider>
@@ -338,12 +343,20 @@
       <workItem from="1517221231430" duration="3171000" />
       <workItem from="1517405359257" duration="927000" />
       <workItem from="1517647338924" duration="7632000" />
+<<<<<<< HEAD
       <workItem from="1517657880602" duration="1768000" />
+=======
+      <workItem from="1517657880602" duration="29000" />
+>>>>>>> parent of 958afed... 수정1
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
+<<<<<<< HEAD
     <option name="totallyTimeSpent" value="331464000" />
+=======
+    <option name="totallyTimeSpent" value="329725000" />
+>>>>>>> parent of 958afed... 수정1
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -721,8 +734,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/sql/createtable">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="361">
           <caret line="114" column="46" lean-forward="true" selection-start-line="114" selection-start-column="46" selection-end-line="114" selection-end-column="46" />
+=======
+        <state relative-caret-position="380">
+          <caret line="111" column="43" lean-forward="true" selection-start-line="111" selection-start-column="43" selection-end-line="111" selection-end-column="43" />
+>>>>>>> parent of 958afed... 수정1
           <folding />
         </state>
       </provider>
