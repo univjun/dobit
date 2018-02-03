@@ -129,7 +129,11 @@ CREATE TABLE bo_free_comment_re
     ALTER TABLE bo_free_master DROP COLUMN down;
 
 
+<<<<<<< HEAD
 v1
 v2
+=======
+>>>>>>> parent of 6b22702... v1
 
 
+    
