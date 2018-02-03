@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ./partials/head%>
+    <script src="https://cdn.ckeditor.com/4.8.0/standard/ckeditor.js"></script>
+  </head>
+  <body class="container">
+
+
+  <header>
+    <%include ./partials/header2%>
+  </header>
+
+  <main>
+    <div class="jumbotron">
+
+      <form>
+        <h3>TITLE</h3>
+        <textarea class="lead form-control" id="titleTextArea" name="title" placeholder="제목을 입력하세요."></textarea>
+        <h3>CONTENT</h3>
+        <textarea class="lead form-control" id="contentsTextArea" name="editor1" placeholder="내용을 입력하세요."></textarea>
+        <script>
+            CKEDITOR.replace( 'editor1' );
+        </script>
+        <h3>AUTHOR</h3>
+        <textarea class="lead form-control" id="authorTextArea" name="author"><%=user[0].user_email%></textarea>
+        <div class="pt-5 mx-auto" style="width:200px;">
+            <button type="submit" class="btn btn-dark" formmethod="get" formaction="/community/<%=commName%>">Cancel</button>
+            <button type="submit" class="btn btn-dark ml-3" formmethod="post" formaction="/community/<%=commName%>/write_proc">Write</button>
+        </div>
+      </form>
+
+    </div>
+
+
+  </main>
+
+  <footer>
+    <%include ./partials/footer%>
+  </footer>
+  <!-- Import jQuery -->
+
+
+
+  </body>
+</html>

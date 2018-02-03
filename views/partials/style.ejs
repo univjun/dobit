@@ -1,0 +1,177 @@
+<style>
+    .fa {
+        width: 20px;
+        height: 20px;
+    }
+
+    body {
+        padding-top: 20px; /* 60px to make the container go all the way to the bottom of the topbar */
+        padding-bottom: 10px;
+        position: relative;
+        background-color: #ffffff;
+    }
+    /* Remove the navbar's default margin-bottom and rounded borders */
+    .navbar {
+        margin-bottom: 0;
+        border-radius: 0;
+    }
+
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: auto}
+
+    /* Set gray background color and 100% height */
+    .sidenav {
+        padding-top: 0px;
+        background-color: #ffffff;
+        height: 100%;
+    }
+    .card {
+        background-color: #ffffff;
+        color: #3b3d3d;
+        padding: 10px;
+    }
+
+    .carousel-inner img {
+        width: auto;
+        height: auto;
+        color: #3b3d3d;
+    }
+    /* Set black background color, white text and some padding */
+    footer {
+        background-color: #555;
+        color: white;
+        padding: 10px;
+    }
+
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+        .sidenav {
+            height: auto;
+            padding: 15px;
+        }
+        .row.content {height:auto;}
+    }
+    @media (min-width: 768px) {
+        .omb_row-sm-offset-3 div:first-child[class*="col-"] {
+            margin-left: 25%;
+        }
+    }
+
+    .omb_login .omb_authTitle {
+        text-align: center;
+        line-height: 300%;
+    }
+
+    .omb_login .omb_socialButtons a {
+        color: white; // In yourUse @body-bg
+    opacity:0.9;
+    }
+    .omb_login .omb_socialButtons a:hover {
+        color: white;
+        opacity:1;
+    }
+    .omb_login .omb_socialButtons .omb_btn-facebook {background: #3b5998;}
+    .omb_login .omb_socialButtons .omb_btn-twitter {background: #00aced;}
+    .omb_login .omb_socialButtons .omb_btn-google {background: #c32f10;}
+    .omb_login .omb_socialButtons .omb_btn-naver {background: #29c340;}
+    .omb_login .omb_socialButtons .omb_btn-kakao {background: #29c340;}
+
+    .omb_login .omb_loginOr {
+        position: relative;
+        font-size: 1.5em;
+        color: #aaa;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        padding-top: 0.5em;
+        padding-bottom: 0.5em;
+    }
+    .omb_login .omb_loginOr .omb_hrOr {
+        background-color: #cdcdcd;
+        height: 1px;
+        margin-top: 0px !important;
+        margin-bottom: 0px !important;
+    }
+    .omb_login .omb_loginOr .omb_spanOr {
+        display: block;
+        position: absolute;
+        left: 50%;
+        top: -0.6em;
+        margin-left: -1.5em;
+        background-color: white;
+        width: 3em;
+        text-align: center;
+    }
+
+    .omb_login .omb_loginForm .input-group.i {
+        width: 2em;
+    }
+    .omb_login .omb_loginForm  .help-block {
+        color: red;
+    }
+
+
+    @media (min-width: 768px) {
+        .omb_login .omb_forgotPwd {
+            text-align: right;
+            margin-top:10px;
+        }
+    }
+
+    /* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        padding-top: 60px;
+    }
+
+    /* Modal Content/Box */
+    .modal-content {
+        background-color: #fefefe;
+        margin: 5px auto; /* 15% from the top and centered */
+        border: 1px solid #888;
+        width: 80%; /* Could be more or less, depending on screen size */
+    }
+
+    /* The Close Button */
+    .close {
+        /* Position it in the top right corner outside of the modal */
+        position: absolute;
+        right: 25px;
+        top: 0;
+        color: #000;
+        font-size: 35px;
+        font-weight: bold;
+    }
+
+    /* Close button on hover */
+    .close:hover,
+    .close:focus {
+        color: red;
+        cursor: pointer;
+    }
+
+    /* Add Zoom Animation */
+    .animate {
+        -webkit-animation: animatezoom 0.6s;
+        animation: animatezoom 0.6s
+    }
+
+    @-webkit-keyframes animatezoom {
+        from {-webkit-transform: scale(0)}
+        to {-webkit-transform: scale(1)}
+    }
+
+    @keyframes animatezoom {
+        from {transform: scale(0)}
+        to {transform: scale(1)}
+    }
+
+</style>

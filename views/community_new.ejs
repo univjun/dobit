@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ./partials/head.ejs%>
+    <% include ./partials/style_new.ejs%>
+</head>
+<body class="container">
+<header>
+    <%include partials/header_main.ejs%>
+</header>
+<main class="ng">
+
+  <div class="container" style="margin-top:100px">
+    <h3 class="text-center"><b>자유게시판</b></h3>
+    <!--<p>The .table-striped class adds zebra-stripes to a table:</p>-->
+    <table class="table">
+      <thead class="text-center">
+      <tr>
+        <th>#</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>등록일</th>
+        <th>조회수</th>
+        <th>추천수</th>
+      </tr>
+      </thead>
+      <tbody>
+      <ul>
+          <% for (var i = 0 ; i < 12 ; i ++) { %>
+        <tr class="text-center">
+          <td> <a ><%=i+1%></a></td>
+          <td> <a href="/community/">그렇게 생각하면 끝까지 편할까</a></td>
+          <td> <a href="/community/>/show_profile">강동원</a></td>
+          <td> <a src="/community/>">20 Jan. 2018. 10.20 pm</a></td>
+          <td>
+            243345
+          </td>
+          <td>
+            <i class="fa fa-thumbs-o-up fa-lg"></i>2342
+            <i class="fa fa-thumbs-o-down fa-lg"></i>324
+          </td>
+            <%}%>
+      </ul>
+      </tr>
+      </tbody>
+    </table>
+
+
+    <div class="clearfix">
+
+      <button type="button" class="float-right btn btn-dark mr-2 mx-auto" style="width:200px;" onclick=window.location="/community//write">Write</button>
+    </div>
+    <div class="text-center">
+      <ul class="pagination justify-content-center">
+        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item active"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+      </ul>
+
+    </div>
+  </div>
+
+</main>
+
+<footer>
+    <%include ./partials/footer%>
+</footer>
+
+<script src="/javascripts/nj_ejs_func.js"></script>
+
+
+</body>
+</html>

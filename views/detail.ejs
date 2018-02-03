@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ./partials/head%>
+  </head>
+  <body class="container">
+  <header>
+    <%include ./partials/header2%>
+  </header>
+
+  <main>
+    <div class="jumbotron">
+      <h3>TITLE</h3>
+      <p class="lead"><%- record[0].title%></p>
+      <h3>CONTENT</h3>
+      <p class="lead"><%-record[0].contents%></p>
+      <h3>AUTHOR</h3>
+      <p class="lead"><%- record[0].author%></p>
+      <hr class="divider">
+
+      <!--comments input-->
+      <form>
+        <div class="form-group">
+          <label for="commentsInputTextarea">Comments</label>
+          <textarea class="form-control" id="commentsInputTextarea" rows="2" name="comments"></textarea>
+          <button type="submit" class="btn btn-dark" formmethod="post" formaction="/community/<%=commName%>/<%=rid%>/insert_comments">OK</button>
+        </div>
+      </form>
+      <!--comments part-->
+
+      <% for (var i = 0 ; i < comments.length ; i++) {%>
+      <div style="display: inline-block">
+
+        <div  style="display: inline">
+          <img src="/img/profile_sample.png" width="40px" height="40px">
+        </div>
+        <div  style="display: inline; alignment: center">
+          <a>
+            <strong>user_id:<%=comments[i].user_id%></strong> / <strong>user_from:<%=comments[i].user_from%></strong> / <strong>comments_id:<%=comments[i].test_table_comments_id%></strong> / <strong> Date:<%=comments[i].date%> </strong>
+            <br>
+            <a>comments:<%=comments[i].comments%></a>
+          </a>
+
+          <% for (var j = 0 ; j < commentsReply.length ; j ++){%>
+          <p class="pl-4">
+            <strong>ㄴTo:<%=commentsReply[j].to_id%></strong> / <strong>user_id:<%=commentsReply[j].user_id%></strong> / <strong> Date:<%=commentsReply[j].date%> </strong>
+            <br>
+            <a>comments:<%=commentsReply[j].reply%></a>
+          </p>
+
+          <%}%>
+
+        </div>
+
+
+        <!--comments reply part-->
+        <div style="display:none" class = "form-group" id="reply">
+          <form>
+            <label for="commentsReplyInputTextarea">reply</label>
+            <textarea class="form-control" id="commentsReplyInputTextarea" rows="1" name="commentsReply"></textarea>
+            <button type="submit" class="btn btn-dark" formmethod="post" formaction="/community/<%=commName%>/<%=rid%>/insert_comments_reply/<%=comments[i].test_table_comments_id%>">OK</button>
+            <button class="btn btn-dark" id="hideReply">Cancel</button>
+          </form>
+
+        </div>
+        <div id="comments_control_part">
+          <button class="btn btn-dark" id="showReply">Reply</button>
+          <button type="submit" class="btn btn-dark" formmethod="post" formaction="/community/<%=commName%>/<%=rid%>/delete_comments">Delete</button>
+        </div>
+
+      </div>
+      <%}%>
+
+
+
+
+      <div class="mx-auto" style="width:300px;">
+        <form method="get" class="pt-5">
+          <button type="submit" class="btn btn-dark" formaction="/community/<%=commName%>">Go Back</button>
+          <button type="submit" class="btn btn-dark ml-3" formaction="/community/<%=commName%>/<%=rid%>/edit">Edit</button>
+          <button type="submit" class="btn btn-dark ml-3" formmethod="post" formaction="/community/<%=commName%>/<%=rid%>/delete">Delete</button>
+        </form>
+      </div>
+
+
+    </div>
+
+
+  </main>
+
+  <footer>
+    <%include ./partials/footer%>
+  </footer>
+
+  <script src="/javascripts/nj_ejs_func.js"></script>
+
+
+  </body>
+</html>

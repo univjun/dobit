@@ -1,0 +1,67 @@
+
+<nav class="navbar navbar-toggleable-md navbar-expand-sm bg-dark navbar-dark fixed-top">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup navbarNavAltMarkup2" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+        <a class="navbar-brand" href="/">
+            <img src="/img/logo3.png" width="30" height="30" class="d-inline-block align-top" alt="bit">
+        </a>
+
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav  ml-2 mb-0 ">
+            <a class="m-1 nav-item nav-link active" href="/">
+                <img src="/open-iconic-master/svg/home.svg"  width="20" height="20" alt="home">
+                <span class="sr-only">(current)</span></a>
+            <a class="m-1 nav-item nav-link" href="/about">About</a>
+            <a class="m-1 nav-item nav-link" href="/mypage">MyPage</a>
+            <!--<a class="nav-item nav-link" href="/signup">Signup</a>-->
+         </div>
+
+        <form class="form-inline ml-auto">
+            <input class="form-control mr-sm-2" type="search" placeholder="검색어를 입력하세요." aria-label="검색">
+            <button class="btn btn-outline btn-success my-0 my-sm-0" type="submit">검색</button>
+        </form>
+
+        <%if(user) {%>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <p class="m-1 nav-item nav-link active">Welcome, <%= user[0].user_displayName %></p>
+            </li>
+            <li class="nav-item">
+                <button type="submit" class="m-1 btn btn-outline-success" onclick="window.location='/logout'">Logout</button>
+            </li>
+        </ul>
+        <%} else {%>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <button type="button" class="m-1 btn btn-outline-success" onclick="window.location='/login'">
+                    <img src="/open-iconic-master/svg/account-login.svg"  width="30" height="20" alt="Login">
+                </button>
+            </li>
+            <li class="nav-item">
+                <button type="button" class="m-1 btn btn-outline-success" onclick="window.location='/signup'">Signup</button>
+            </li>
+
+        </ul>
+        <%}%>
+    </div>
+
+</nav>
+
+
+
+
+<!--<div class="collapse navbar-collapse" id="navbarNavAltMarkup">-->
+    <!--<div class="navbar-nav">-->
+        <!--<a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>-->
+        <!--<a class="nav-item nav-link" href="/about">About</a>-->
+        <!--&lt;!&ndash;<a class="nav-item nav-link" href="/login">Login</a>&ndash;&gt;-->
+        <!--&lt;!&ndash;<a class="nav-item nav-link" href="/signup">Signup</a>&ndash;&gt;-->
+        <!--<div class="float-xl-right px-2">-->
+            <!--<button type="button" class="btn btn-outline-primary">Login</button>-->
+            <!--<button type="button" class="btn btn-outline-primary">Signup</button>-->
+        <!--</div>-->
+    <!--</div>-->
+
+<!--</div>-->

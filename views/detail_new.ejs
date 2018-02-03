@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ./partials/head%>
+</head>
+<body class="container">
+<header>
+    <%include ./partials/header2%>
+</header>
+
+<main>
+    <div class="jumbotron">
+        <h3>TITLE</h3>
+        <p class="lead">sample title</p>
+        <h3>CONTENT</h3>
+        <p class="lead">sample contents</p>
+        <h3>AUTHOR</h3>
+        <p class="lead">sample writer</p>
+        <hr class="divider">
+
+        <!--comments input-->
+        <form>
+            <div class="form-group">
+                <label for="commentsInputTextarea">Comments</label>
+                <textarea class="form-control" id="commentsInputTextarea" rows="2" name="comments"></textarea>
+                <button type="submit" class="btn btn-dark" formmethod="post" formaction="#">OK</button>
+            </div>
+        </form>
+        <!--comments part-->
+
+
+        <div style="display: inline-block">
+
+            <div  style="display: inline">
+                <img src="/img/profile_sample.png" width="40px" height="40px" alt="imgeeee">
+            </div>
+            <div  style="display: inline; alignment: center">
+                <a>
+                    <strong>user_id:</strong> / <strong>user_from:</strong> / <strong>comments_id:</strong> / <strong> Date: </strong>
+                    <br>
+                    <a>comments:</a>
+                </a>
+
+
+                <p class="pl-4">
+                    <strong>ㄴTo:</strong> / <strong>user_id:</strong> / <strong> Date: </strong>
+                    <br>
+                    <a>comments:</a>
+                </p>
+
+
+
+            </div>
+
+
+            <!--comments reply part-->
+            <div style="display:none" class = "form-group" id="reply">
+                <form>
+                    <label for="commentsReplyInputTextarea">reply</label>
+                    <textarea class="form-control" id="commentsReplyInputTextarea" rows="1" name="commentsReply"></textarea>
+                    <button type="submit" class="btn btn-dark" formmethod="post" formaction="#">OK</button>
+                    <button class="btn btn-dark" id="hideReply">Cancel</button>
+                </form>
+
+            </div>
+            <div id="comments_control_part">
+                <button class="btn btn-dark" id="showReply">Reply</button>
+                <button type="submit" class="btn btn-dark" formmethod="post" formaction="#">Delete</button>
+            </div>
+
+        </div>
+
+
+
+
+
+        <div class="mx-auto" style="width:300px;">
+            <form method="get" class="pt-5">
+                <button type="submit" class="btn btn-dark" formaction="#">Go Back</button>
+                <button type="submit" class="btn btn-dark ml-3" formaction="#">Edit</button>
+                <button type="submit" class="btn btn-dark ml-3" formmethod="post" formaction="#">DELETE</button>
+            </form>
+        </div>
+
+
+    </div>
+
+
+</main>
+
+<footer>
+    <%include ./partials/footer%>
+</footer>
+
+<script src="/javascripts/nj_ejs_func.js"></script>
+
+
+</body>
+</html>

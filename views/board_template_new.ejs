@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ./partials/head_new.ejs%>
+</head>
+
+<body class="index-page sidebar-collapse">
+
+<header>
+    <%include ./partials/header_etc.ejs%>
+</header>
+<main class="ng">
+
+    <div class="container " style="margin-top:100px">
+        <h3 class="text-center"><b>자유게시판</b></h3>
+        <!--<p>The .table-striped class adds zebra-stripes to a table:</p>-->
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="text-center">#</th>
+                <th class="text-center">제목</th>
+                <th class="text-center">작성자</th>
+                <th class="text-center">등록일</th>
+                <th class="text-center">조회수</th>
+                <th class="text-center">추천수</th>
+            </tr>
+            </thead>
+            <tbody>
+            <ul>
+                <% for (var i = 0 ; i < records.length ; i ++) { %>
+                <tr class="text-center">
+                    <td> <a ><%=records[i].idx+1%></a></td>
+                    <td> <a href="/community/<%= commName%>/<%=records[i].idx%>"><%=records[i].title%></a></td>    <!--타이틀-->
+                    <td> <a href="/community/>/show_profile"><%=records[i].user_email%></a></td>  <!--작성자-->
+                    <td> <a src="/community/>"><%=moment(records[i].edit_date).format('YY-MM-DD, h:mm a')%></a></td>   <!--날짜-->
+                    <td>
+                        <%=records[i].hit%> <!--조회수-->
+                    </td>
+                    <td>
+                        <i class="fa fa-thumbs-o-up fa-lg"></i><%=records[i].up%>
+                        <i class="fa fa-thumbs-o-down fa-lg"></i><%=records[i].down%>
+                    </td>
+                    <%}%>
+            </ul>
+            </tr>
+            </tbody>
+        </table>
+
+
+        <div class="clearfix">
+
+            <button type="button" class="float-right btn btn-dark mr-2 mx-auto" style="width:200px;" onclick=window.location="/community/<%=commName%>/write">Write</button>
+        </div>
+        <div class="text-center">
+            <ul class="pagination justify-content-center">
+                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item active"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            </ul>
+
+        </div>
+    </div>
+
+</main>
+
+<footer class="footer" data-background-color="blue">
+    <div class="container">
+        <nav>
+            <ul>
+                <li>
+                    <a href="https://www.creative-tim.com">
+                        Creative Tim
+                    </a>
+                </li>
+                <li>
+                    <a href="http://presentation.creative-tim.com">
+                        About Us
+                    </a>
+                </li>
+                <li>
+                    <a href="http://blog.creative-tim.com">
+                        Blog
+                    </a>
+                </li>
+                <li>
+                    <a href="https://github.com/creativetimofficial/now-ui-kit/blob/master/LICENSE.md">
+                        MIT License
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            &copy;
+            <script>
+                document.write(new Date().getFullYear())
+            </script>, Designed by
+            <a href="http://www.invisionapp.com" target="_blank">KJH</a>. Coded by
+            <a href="https://www.creative-tim.com" target="_blank">YSM</a>.
+        </div>
+    </div>
+</footer>
+
+<script src="/javascripts/nj_ejs_func.js"></script>
+
+
+</body>
+
+<!--   Core JS Files   -->
+<script src="/assets/js/core/jquery.3.2.1.min.js" type="text/javascript"></script>
+<script src="/assets/js/core/popper.min.js" type="text/javascript"></script>
+<script src="/assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+<!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
+<script src="/assets/js/plugins/bootstrap-switch.js"></script>
+<!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
+<script src="/assets/js/plugins/nouislider.min.js" type="text/javascript"></script>
+<!--  Plugin for the DatePicker, full documentation here: https://github.com/uxsolutions/bootstrap-datepicker -->
+<script src="/assets/js/plugins/bootstrap-datepicker.js" type="text/javascript"></script>
+<!-- Control Center for Now Ui Kit: parallax effects, scripts for the example pages etc -->
+<script src="/assets/js/now-ui-kit.js?v=1.1.0" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        // the body of this function is in assets/js/now-ui-kit.js
+        nowuiKit.initSliders();
+    });
+
+    function scrollToDownload() {
+
+        if ($('.section-download').length != 0) {
+            $("html, body").animate({
+                scrollTop: $('.section-download').offset().top
+            }, 1000);
+        }
+    }
+</script>
+</html>

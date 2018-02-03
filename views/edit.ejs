@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ./partials/head%>
+    <script src="https://cdn.ckeditor.com/4.8.0/standard/ckeditor.js"></script>
+  </head>
+  <body class="container">
+
+  <header>
+    <%include ./partials/header2%>
+  </header>
+
+  <main>
+    <div class="jumbotron">
+      <form>
+        <h3>TITLE</h3>
+        <textarea class="lead form-control" id="titleTextArea" name="title"><%= record[0].title%></textarea>
+        <h3>CONTENT</h3>
+        <textarea class="lead form-control" id="contentsTextArea" name="editor1"><%=record[0].contents%></textarea>
+        <script>
+            CKEDITOR.replace( 'editor1' );
+        </script>
+        <h3>AUTHOR</h3>
+        <textarea class="lead form-control" id="authorTextArea" name="author"><%= record[0].author%></textarea>
+        <div class="pt-5 mx-auto" style="width:200px;">
+            <button type="submit" class="btn btn-dark" formmethod="get" formaction="/community/<%=commName%>/<%=rid%>">Cancel</button>
+            <button type="submit" class="btn btn-dark ml-3" formmethod="post" formaction="/community/<%=commName%>/<%=rid%>/edit_proc">Do Edit</button>
+        </div>
+      </form>
+
+    </div>
+
+
+  </main>
+
+  <footer>
+    <%include ./partials/footer%>
+  </footer>
+
+  </body>
+</html>
