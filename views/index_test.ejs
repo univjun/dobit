@@ -33,11 +33,10 @@
     </div>
     <div class="main">
         <div class="section section-nucleo-icons">
-            <div class="container">
+            <div class="container col-md-6 ">
                         <div class="card text-white img-fluid" style="background-color:rgba(62,151,244,0.5); background-image: url('./assets/img/board1.jpg');" >
                             <div class="header text-center">
                                 <h4 class="title title-up">코인소개</h4>
-                                <hr style="background-color: #ffffff;">
                                 <div class="social-line">
                                     <div class="row">
                                         <div class="col-md-12 text-center">
@@ -53,6 +52,9 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <hr style="background-color: #ffffff;">
+                                      
                             </div>
                             <div class="footer text-center">
                                 <a href="#pablo" class="btn btn-info btn-round btn-lg">Get Started</a>
@@ -83,7 +85,7 @@
                             </div>
                         </div>
             </div>
-            <div class="container">
+            <div class="container col-md-6">
                         <div class="card text-white" style="background-color:rgba(62,151,244,0.5); background-image: url('./assets/img/board4.png');">
                             <div class="header text-center">
                                 <h4 class="title title-up">코인동향</h4>
@@ -233,70 +235,10 @@
         </div>
     </div>
     <!--  End Modal -->
-    <footer class="footer" data-background-color="blue">
-        <div class="container">
-            <nav>
-                <ul>
-                    <li>
-                        <a href="https://www.creative-tim.com">
-                            Creative Tim
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://presentation.creative-tim.com">
-                            About Us
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://blog.creative-tim.com">
-                            Blog
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://github.com/creativetimofficial/now-ui-kit/blob/master/LICENSE.md">
-                            MIT License
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-            <div class="copyright">
-                &copy;
-                <script>
-                    document.write(new Date().getFullYear())
-                </script>, Designed by
-                <a href="http://www.invisionapp.com" target="_blank">KJH</a>. Coded by
-                <a href="https://www.creative-tim.com" target="_blank">YSM</a>.
-            </div>
-        </div>
+    <footer>
+        <%include ./partials/footer_new.ejs%>
     </footer>
 </div>
 </body>
-<!--   Core JS Files   -->
-<script src="./assets/js/core/jquery.3.2.1.min.js" type="text/javascript"></script>
-<script src="./assets/js/core/popper.min.js" type="text/javascript"></script>
-<script src="./assets/js/core/bootstrap.min.js" type="text/javascript"></script>
-<!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
-<script src="./assets/js/plugins/bootstrap-switch.js"></script>
-<!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
-<script src="./assets/js/plugins/nouislider.min.js" type="text/javascript"></script>
-<!--  Plugin for the DatePicker, full documentation here: https://github.com/uxsolutions/bootstrap-datepicker -->
-<script src="./assets/js/plugins/bootstrap-datepicker.js" type="text/javascript"></script>
-<!-- Control Center for Now Ui Kit: parallax effects, scripts for the example pages etc -->
-<script src="./assets/js/now-ui-kit.js?v=1.1.0" type="text/javascript"></script>
-<script type="text/javascript">
-    $(document).ready(function() {
-        // the body of this function is in assets/js/now-ui-kit.js
-        nowuiKit.initSliders();
-    });
-
-    function scrollToDownload() {
-
-        if ($('.section-download').length != 0) {
-            $("html, body").animate({
-                scrollTop: $('.section-download').offset().top
-            }, 1000);
-        }
-    }
-</script>
 
 </html>

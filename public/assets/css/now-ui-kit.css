@@ -5811,6 +5811,10 @@ Created using IcoMoon - icomoon.io
     background-color: #3e97f4;
 }
 
+[data-background-color="deep"] {
+    background-color: #3e97f4;
+}
+
 [data-background-color] {
     color: #FFFFFF;
 }
