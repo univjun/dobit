@@ -52,12 +52,12 @@
                 </li>
                 <%if(user) {%>
                 <li class="nav-item">
-                    <li class="nav-item">
-                        <p class="m-1 nav-item nav-link active">Welcome, <%= user[0].user_displayName %></p>
-                    </li>
-                    <li class="nav-item">
-                        <button type="submit" class="btn btn-sm btn-block bg-transparent"  onclick="window.location='/logout'">Logout</button>
-                    </li>
+                    <a class="ml-4 nav-item nav-link active"><i class="fa fa-user-circle" aria-hidden="true"></i> &nbsp <%= user[0].user_email %></a>
+                </li>
+                <li class="nav-item">
+                    <button type="submit" class="btn btn-sm btn-block bg-transparent"  onclick="window.location='/logout'">
+                        <i class="fa fa-sign-out" aria-hidden="true"></i>
+                    </button>
                 </li>
                 <%} else {%>
                 <li class="nav-item">

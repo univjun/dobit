@@ -150,10 +150,25 @@ router.post('/:communityName/:rid/up_proc', function(req, res, next) {
                 if (result[0]) {
                     //console.log(result[0]);
                     //res.send('이미 추천한 게시물입니다.');
-                    req.flash('upMessage', 'Already Up');
-                    res.redirect('/community/' + commName + '/' + id);
+                    //req.flash('upMessage', 'Already Up');
+                    var query = "DELETE FROM "+ up_check_table_name +" WHERE up_user_idx = " + user_id + " AND master_idx =" + id;
+                    db.query(query, function(err, result){
+                        if(err){
+                            res.send("잘못된 접근입니다.");
+                            console.log(err);
+                        } else {
+                            var query2 = "UPDATE " + table_name + " SET up = up - 1 WHERE idx = "+id;
+                            db.query(query2, function(err, result){
+                                if(err){
+                                    res.send("잘못된 접근입니다.2");
+                                    console.log(err);
 
-
+                                } else {
+                                    res.redirect('/community/' + commName + '/' + id);
+                                }
+                            });
+                        }
+                    });
                 } else {
                     db.query(queryToUpdb, values, function (err, result2) {
                         if (err) {
