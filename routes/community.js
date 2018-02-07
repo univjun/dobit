@@ -43,7 +43,7 @@ router.get('/:communityName', function(req, res, next) {
 router.get('/:communityName/write', function(req, res, next) {
     if(req.user){
         var commName = req.params.communityName;
-        res.render('write',{
+        res.render('write_new',{
             commName:commName,
             user: req.user
         })

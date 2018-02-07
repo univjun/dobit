@@ -1,29 +1,35 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <% include ./partials/head%>
+    <% include ./partials/head_new%>
     <script src="https://cdn.ckeditor.com/4.8.0/standard/ckeditor.js"></script>
   </head>
-  <body class="container">
+  <body>
 
 
   <header>
-    <%include ./partials/header2%>
+    <%include ./partials/header_etc%>
   </header>
 
   <main>
-    <div class="jumbotron">
+
+    <div class="container jumbotron-fluid" style="margin-top:100px;">
 
       <form>
-        <h3>TITLE</h3>
+        <h3>글쓰기</h3>
         <textarea class="lead form-control" id="titleTextArea" name="title" placeholder="제목을 입력하세요."></textarea>
-        <h3>CONTENT</h3>
+        <br>
         <textarea class="lead form-control" id="contentsTextArea" name="editor1" placeholder="내용을 입력하세요."></textarea>
         <script>
             CKEDITOR.replace( 'editor1' );
         </script>
-        <h3>AUTHOR</h3>
-        <textarea class="lead form-control" id="authorTextArea" name="author"><%=user[0].user_email%></textarea>
+        <br>
+        <p class="form-control-static"><i class="now-ui-icons users_single-02"></i> <%=user[0].user_email%></p>
+        <div class="form-group">
+          <label for="exampleInputFile"><i class="fas fa-file"></i></label>
+          <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="첨부파일">
+          <small id="fileHelp" class="form-text text-muted">업로드 용량은 5MB로 제한됩니다.</small>
+        </div>
         <div class="pt-5 mx-auto" style="width:200px;">
             <button type="submit" class="btn btn-dark" formmethod="get" formaction="/community/<%=commName%>">Cancel</button>
             <button type="submit" class="btn btn-dark ml-3" formmethod="post" formaction="/community/<%=commName%>/write_proc">Write</button>
@@ -34,13 +40,9 @@
 
 
   </main>
+  </body>
 
   <footer>
-    <%include ./partials/footer%>
+      <%include ./partials/footer_new%>
   </footer>
-  <!-- Import jQuery -->
-
-
-
-  </body>
 </html>
