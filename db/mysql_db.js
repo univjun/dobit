@@ -3,8 +3,8 @@ var mysql = require('mysql');
 var options = {
     host: 'localhost',
     user: 'root',
-    password: '1099as',
-    database: 'univjundb'
+    password: '923601',
+    database: 'node_express_first_db'
 };
 
 
