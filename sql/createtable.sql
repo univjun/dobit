@@ -129,7 +129,16 @@ CREATE TABLE bo_free_comment_re
     ALTER TABLE bo_free_master DROP COLUMN down;
 
 
-v1
-v2
+        CREATE TABLE bo_free_up (
+        idx BIGINT NOT NULL AUTO_INCREMENT,
+        master_idx INT NOT NULL,
+        up_user_idx BIGINT NOT NULL,
+        reg_date TIMESTAMP NOT NULL,
+        edit_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        temp1 VARCHAR(255),
+        temp2 VARCHAR(255),
+        temp3 VARCHAR(255),
+        temp4 VARCHAR(255),
+        PRIMARY KEY(idx)
 
-1
+        )

@@ -119,6 +119,59 @@ router.get('/:communityName/:rid/show_profile', function(req, res, next) {
     //res.send('responsessssss');
 });
 
+
+/**
+ * UP and DOWN
+ */
+router.post('/:communityName/:rid/up_proc', function(req, res, next) {
+    var commName = req.params.communityName;
+    var id = req.params.rid;
+    var comments = req.body.comments;
+    var table_name = 'bo_' + commName + '_master'; //bo_free_master
+    var up_check_table_name = 'bo_' + commName + '_up';
+    //var date = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    var date = moment().format('YYYY-MM-DD HH:mm:ss');
+    var comment_table_name = 'bo_' + commName + '_comment';
+    //로그인 되어 있으면
+    if(req.user) {
+        var user_id = req.user[0].user_id;
+        var queryForCheck = "SELECT * FROM " + up_check_table_name + " WHERE up_user_idx =" + user_id + " AND master_idx = " + id;
+        var queryToUp = "UPDATE " + table_name + " SET up = up + 1 WHERE idx = " + id;
+        var queryToUpdb = "INSERT INTO " + up_check_table_name + " (master_idx, up_user_idx, reg_date) VALUES (?)";
+        var values = [
+            [id, user_id, date]
+        ];
+        db.query(queryForCheck, function (err, result) {
+            if (err) {
+                console.log('error occured:', err);
+            } else {
+                if (result[0]) {
+                    //console.log(result[0]);
+                    //res.send('이미 추천한 게시물입니다.');
+                    req.flash('upMessage', 'Already Up');
+                    res.redirect('/community/' + commName + '/' + id);
+
+
+                } else {
+                    db.query(queryToUpdb, values, function (err, result2) {
+                        if (err) {
+                            console.log('err occurred : ', err);
+
+                        } else {
+                            db.query(queryToUp);
+                            res.redirect('/community/' + commName + '/' + id);
+                        }
+                    });
+
+                }
+            }
+        });
+
+
+    }
+});
+
+
 router.get('/:communityName/:rid/edit', function(req, res, next) {
     var id = req.params.rid;
     var commName = req.params.communityName;
