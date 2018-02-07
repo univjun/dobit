@@ -10,6 +10,9 @@
     <%include partials/header_etc.ejs%>
 </header>
 <main class="container">
+    <% if (upMessage.length > 0) { %>
+    <script> alert("<%=upMessage%>")</script>
+    <%}%>
     <div class="container-fluid" style="margin-top:70px">
         <a class="btn btn-warning text-white float-right">자유게시판</a>
         <br>
@@ -30,10 +33,12 @@
         <p class="lead"><%-record[0].contents%>
         </p>
         <div class="text-center">
-            <a class="btn btn-primary btn-round btn-simple btn-sm" href="#">
-                <i class="fa fa-thumbs-o-up fa-lg"></i><%-record[0].up%></a>
-            <a class="btn btn-info btn-round btn-simple btn-sm " href="#">
-                <i class="fa fa-thumbs-o-down fa-lg"></i><%-record[0].down%></a>
+            <form method = "post">
+                <button class="btn btn-primary btn-round btn-simple btn-sm" <% if (!user){ %>disabled <%} if (user){ %> formmethod="post" formaction="/community/<%=commName%>/<%=rid%>/up_proc"<%}%>>
+                    <i class="fa fa-thumbs-o-up fa-lg"></i><%-record[0].up%></button>
+                <button class="btn btn-info btn-round btn-simple btn-sm " <% if (!user){ %>disabled <%} if (user){ %> formmethod="post" formaction="/community/<%=commName%>/<%=rid%>/down_proc"<%}%>>
+                    <i class="fa fa-thumbs-o-down fa-lg"></i><%-record[0].down%></button>
+            </form>
         </div>
         <hr class="divider">
 
@@ -41,13 +46,14 @@
         <form>
             <div class="form-group">
                 <label for="commentsInputTextarea">댓글</label>
-                <textarea class="form-control" id="commentsInputTextarea" rows="2" name="comments"></textarea>
-                <button type="submit" class="btn btn-info btn-round float-right" formmethod="post" formaction="#">등록</button>
+                <textarea class="form-control" id="commentsInputTextarea" rows="2" name="comments" onclick="needLogin(<%=user%>)"></textarea>
+                <button type="submit" class="btn btn-info btn-round float-right" formmethod="post" formaction="/community/<%=commName%>/<%=rid%>/insert_comments" <% if (!user) {%> disabled <%}%>>등록</button>
             </div>
         </form>
         <!--comments part-->
 
         <div style="display: inline-block">
+        <% for (var i = 0 ; i < comments.length ; i++) {%>
             <div  style="display: inline">
                 <img src="/img/profile_sample2.png" width="40px" height="40px" alt="imgeeee">
             </div>
@@ -58,20 +64,55 @@
                 <!--<a>comments:</a>-->
                 <!--</a>-->
                 <a>
-                    <strong>강동원:</strong> 유용한 자료에 감사드립니다. 추천 드릴께요!  &nbsp; &nbsp; &nbsp;
-                    <a class="text-muted">Jan 21. 2018. 11:20 am  &nbsp; &nbsp; &nbsp;</a>
+                    <strong><%=comments[i].writer_id%>:</strong> comments:<%=comments[i].contents%> &nbsp; &nbsp;
+                    <a class="text-muted"><%=moment(comments[i].edit_date).format('YY-DD-MM, h:mm a')%>  &nbsp; &nbsp; &nbsp;</a>
                     <a class="btn btn-primary btn-round btn-simple btn-sm center" href="#">
                         <i class="fa fa-thumbs-o-up fa-lg"></i>445</a>
                     <a class="btn btn-info btn-round btn-simple btn-sm" href="#">
                         <i class="fa fa-thumbs-o-down fa-lg"></i>5</a>
                     <br>
                 </a>
+
+            </div>
+            <div class="replyControlPart" id="comments_control_part<%=i%>">
+                <button class="btn btn-info btn-round" onclick="toggleComments(<%=i%>)">Reply</button>
+                <form>
+                    <button type="submit" class="btn btn-danger btn-round" formmethod="post" formaction="/community/<%=commName%>/<%=rid%>/delete_comments/<%=comments[i].idx%>">Delete</button>
+                </form>
+            </div>
+            <div style="display:none" class = "replyInputPart" id="comments<%=i%>">
+                <form>
+                    <label for="commentsReplyInputTextarea">comments</label>
+                    <textarea class="form-control" id="commentsReplyInputTextarea" rows="1" name="commentsReply" onclick="needLogin(<%=user%>)"></textarea>
+                    <button type="submit" class="btn btn-info btn-round" formmethod="post" formaction="/community/<%=commName%>/<%=rid%>/insert_comments_reply/<%=comments[i].idx%>" <% if (!user) {%> disabled <%}%>>OK</button>
+                </form>
+                <button class="hideReply btn btn-info btn-round" onclick="toggleComments(<%=i%>)">Cancel</button>
+
+            </div>
+            <!--&lt;!&ndash;comments reply part&ndash;&gt;-->
+            <!--<div style="display:none" class = "form-group" id="reply">-->
+                <!--<form>-->
+                    <!--<label for="commentsReplyInputTextarea">reply</label>-->
+                    <!--<textarea class="form-control" id="commentsReplyInputTextarea" rows="1" name="commentsReply"></textarea>-->
+                    <!--<button type="submit" class="btn btn-info btn-round" formmethod="post" formaction="#">OK</button>-->
+                    <!--<button class="btn btn-info btn-round" id="hideReply">Cancel</button>-->
+                <!--</form>-->
+
+            <!--</div>-->
+            <!--<div id="comments_control_part">-->
+                <!--<button class="btn btn-info btn-round" id="showReply">Reply</button>-->
+                <!--<button type="submit" class="btn btn-danger btn-round" formmethod="post" formaction="#">Delete</button>-->
+                <!--<br>-->
+            <!--</div>-->
+            <% for(var j = 0 ; j < commentsReply.length ; j ++){%>
+            <% if(commentsReply[j].comment_idx === comments[i].idx ) {%>
+            <div  style="display: inline; alignment: center">
                 <p class="pl-4">
 
                     <strong>ㄴ</strong>
                     <img src="/img/profile_sample2.png" width="40px" height="40px" alt="imgeeee">
-                    <strong>정우성:</strong> 네 이런 게시물이 많아졌으면 좋겠습니다. &nbsp; &nbsp; &nbsp;
-                    <a class="text-muted">Jan 21. 2018. 1:30 pm  &nbsp; &nbsp; &nbsp;</a>
+                    <strong>@<%=commentsReply[j].comment_idx%> &nbsp; </strong><%=commentsReply[j].writer_id%>:  <%=commentsReply[j].contents%>&nbsp; &nbsp; &nbsp;
+                    <a class="text-muted"><%=moment(commentsReply[j].edit_date).format('YY-DD-MM, h:mm a')%>  &nbsp; &nbsp; &nbsp;</a>
                     <a class="btn btn-primary btn-simple btn-sm center" href="#">
                         <i class="fa fa-thumbs-o-up fa-lg"></i>2</a>
                     <a class="btn btn-info btn-simple btn-sm" href="#">
@@ -79,28 +120,37 @@
                     <br>
                 </p>
             </div>
-            <!--comments reply part-->
-            <div style="display:none" class = "form-group" id="reply">
-                <form>
-                    <label for="commentsReplyInputTextarea">reply</label>
-                    <textarea class="form-control" id="commentsReplyInputTextarea" rows="1" name="commentsReply"></textarea>
-                    <button type="submit" class="btn btn-info btn-round" formmethod="post" formaction="#">OK</button>
-                    <button class="btn btn-info btn-round" id="hideReply">Cancel</button>
-                </form>
+            <!--대댓글 컨트롤 파트-->
+            <div style="margin-left: 50px">
+                <div class="replyControlPart" id="comments_reply_control_part<%=j%>">
+                    <button class="btn btn-info btn-round" onclick="toggleReply(<%=j%>)">Reply</button>
+                    <form>
+                        <button type="submit" class="btn btn-danger btn-round" formmethod="post" formaction="/community/<%=commName%>/<%=rid%>/delete_comments_reply/<%=commentsReply[j].idx%>">Delete</button>
+                    </form>
+                </div>
+                <div style="display:none" class = "replyInputPart" id="reply<%=j%>">
+                    <form>
+                        <label for="commentsReplyInputTextarea">reply</label>
+                        <textarea class="form-control" id="commentsReplyInputTextarea" rows="1" name="commentsReply" onclick="needLogin(<%=user%>)"></textarea>
+                        <button type="submit" class="btn btn-info btn-round" formmethod="post" formaction="" <% if (!user) {%> disabled <%}%>>OK</button>
+                    </form>
+                    <button class="hideReply btn btn-info btn-round" onclick="toggleReply(<%=j%>)">Cancel</button>
 
+                </div>
             </div>
-            <div id="comments_control_part">
-                <button class="btn btn-info btn-round" id="showReply">Reply</button>
-                <button type="submit" class="btn btn-danger btn-round" formmethod="post" formaction="#">Delete</button>
-                <br>
-            </div>
+            <%}%>
+
+            <%}%>
+            <%}%>
+
+
         </div>
 
         <div class="mx-auto" style="width:300px; margin-bottom:20px">
             <form method="get" class="pt-5">
-                <button type="submit" class="btn btn-info btn-round ml-2" formaction="#">Go Back</button>
-                <button type="submit" class="btn btn-info btn-round ml-2" formaction="#">Edit</button>
-                <button type="submit" class="btn btn-danger btn-round ml-2" formmethod="post" formaction="#">DELETE</button>
+                <button type="submit" class="btn btn-info btn-round ml-2" formaction="/community/<%=commName%>">Go Back</button>
+                <button type="submit" class="btn btn-info btn-round ml-2" formaction="/community/<%=commName%>/<%=rid%>/edit">Edit</button>
+                <button type="submit" class="btn btn-danger btn-round ml-2" formmethod="post" formaction="/community/<%=commName%>/<%=rid%>/delete">DELETE</button>
             </form>
         </div>
     </div>

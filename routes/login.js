@@ -20,13 +20,19 @@ var db = require('../db/mysql_db');
 router.get('/', function(req, res, next) {
     var message = req.flash('loginMessage');
 
+
     console.log(req.session);
     //res.render('login', {message: req.flash('loginMessage')});
-    res.render('login', {
-        message: message,
-        user:req.user,
-        isLoggedIn: false
-    });
+    if(req.user){
+        res.redirect('/');
+    } else {
+        res.render('login', {
+            message: message,
+            user:req.user,
+            isLoggedIn: false
+        });
+    }
+
 });
 
 // used to serialize the user for the session
@@ -45,6 +51,8 @@ passport.deserializeUser(function(id, done) {
 
 passport.use(new LocalStrategy({passReqToCallback : true} , function(req, username, password, done){
     var query = 'SELECT * FROM user_master WHERE user_email = ?';
+    req.session.returnTo = req.path;
+
     db.query(query, [username], function(err, rows){
         if(err){
             console.log('failed to connect db');
@@ -93,9 +101,9 @@ passport.use(new FacebookStrategy({
                     console.log('insert success and insert result is:',resultOfInsert);
 
                     db.query("SELECT * FROM user_master WHERE user_facebook_id = ?", [facebookId], function(err, result){
-                       if(err){
-                           console.log('failed to select * from insertId');
-                       }
+                        if(err){
+                            console.log('failed to select * from insertId');
+                        }
                         return cb(null, result[0]);
                     });
 
@@ -111,11 +119,22 @@ passport.use(new FacebookStrategy({
 ));
 
 
-router.post('/login_proc', passport.authenticate('local',{
-    successRedirect:'/',
-    failureRedirect:'/login',
-    failureFlash: true
-}));
+// router.post('/login_proc', passport.authenticate('local',{
+//     successRedirect: '/',
+//     failureRedirect:'/login',
+//     failureFlash: true
+// }));
+
+
+router.post('/login_proc', function(req, res, next){
+    console.log('currentURL: ',req.headers.referer);
+    passport.authenticate('local', {
+        successRedirect: req.headers.referer,
+        failureRedirect:'/login',
+        failureFlash: true
+    })(req,res,next);
+});
+
 
 router.get('/facebook', passport.authenticate('facebook'));
 
