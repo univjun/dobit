@@ -57,6 +57,7 @@ router.get('/:communityName/write', function(req, res, next) {
 
 router.get('/:communityName/:rid', function(req, res, next) {
     var message = req.flash('loginMessage');
+    var upMessage = req.flash('upMessage');
     var commName = req.params.communityName; // free
     var table_name = 'bo_' + commName + '_master'; //bo_free_master
     var comment_table_name = 'bo_' + commName + '_comment'; //bo_free_comment
@@ -87,7 +88,8 @@ router.get('/:communityName/:rid', function(req, res, next) {
                                 rid: id,
                                 comments: comment_records,
                                 commentsReply: comments_reply_records,
-                                message:message
+                                message:message,
+                                upMessage:upMessage
                             });
                             console.log('reply: ',comments_reply_records);
                         }
@@ -119,6 +121,59 @@ router.get('/:communityName/:rid/show_profile', function(req, res, next) {
     //res.send('responsessssss');
 });
 
+
+/**
+ * UP and DOWN
+ */
+router.post('/:communityName/:rid/up_proc', function(req, res, next) {
+    var commName = req.params.communityName;
+    var id = req.params.rid;
+    var comments = req.body.comments;
+    var table_name = 'bo_' + commName + '_master'; //bo_free_master
+    var up_check_table_name = 'bo_' + commName + '_up';
+    //var date = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    var date = moment().format('YYYY-MM-DD HH:mm:ss');
+    var comment_table_name = 'bo_' + commName + '_comment';
+    //로그인 되어 있으면
+    if(req.user) {
+        var user_id = req.user[0].user_id;
+        var queryForCheck = "SELECT * FROM " + up_check_table_name + " WHERE up_user_idx =" + user_id + " AND master_idx = " + id;
+        var queryToUp = "UPDATE " + table_name + " SET up = up + 1 WHERE idx = " + id;
+        var queryToUpdb = "INSERT INTO " + up_check_table_name + " (master_idx, up_user_idx, reg_date) VALUES (?)";
+        var values = [
+            [id, user_id, date]
+        ];
+        db.query(queryForCheck, function (err, result) {
+            if (err) {
+                console.log('error occured:', err);
+            } else {
+                if (result[0]) {
+                    //console.log(result[0]);
+                    //res.send('이미 추천한 게시물입니다.');
+                    req.flash('upMessage', 'Already Up');
+                    res.redirect('/community/' + commName + '/' + id);
+
+
+                } else {
+                    db.query(queryToUpdb, values, function (err, result2) {
+                        if (err) {
+                            console.log('err occurred : ', err);
+
+                        } else {
+                            db.query(queryToUp);
+                            res.redirect('/community/' + commName + '/' + id);
+                        }
+                    });
+
+                }
+            }
+        });
+
+
+    }
+});
+
+
 router.get('/:communityName/:rid/edit', function(req, res, next) {
     var id = req.params.rid;
     var commName = req.params.communityName;
@@ -139,19 +194,22 @@ router.get('/:communityName/:rid/edit', function(req, res, next) {
 
 });
 
-//글쓰기
+/**
+ * 글쓰기
+*/
 router.post('/:communityName/write_proc', function(req, res, next) {
     var commName = req.params.communityName;
     var title = req.body.title;
-    var contents = escape(req.body.editor1);
-    //var writer_id = req.user.user_id;
-    var writer_id = '1';
-    var reg_date = Date.now(); ////<<<<여기 고치기
+    var contents = req.body.editor1;
+    var writer_id = req.user[0].user_id;
+
+    //var writer_id = '1';
+    //var reg_date = Date.now(); ////<<<<여기 고치기
 
     var table_name = "bo_"+commName+"_master";
-    var data = [[title, contents, writer_id,reg_date]];
+    var data = [[title, contents, writer_id]];
     //console.log(data);
-    var query = 'INSERT INTO '+table_name+' (title,contents,writer_id,reg_date) VALUES (?)';
+    var query = 'INSERT INTO '+table_name+' (title,contents,writer_id,reg_date) VALUES (?, CURRENT_TIMESTAMP)';
 
     db.query(query, data, function(err,results){
         if(err){
@@ -185,10 +243,14 @@ router.post('/:communityName/:rid/edit_proc', function(req, res, next) {
     });
 });
 
+/**
+ * 게시글 삭제
+ */
 router.post('/:communityName/:rid/delete', function(req, res, next) {
     var commName = req.params.communityName;
     var id = req.params.rid;
-    var query = 'DELETE FROM test_table WHERE id = ?';
+    var table_name  = 'bo_'+commName+'_master';
+    var query = 'DELETE FROM '+table_name+' WHERE idx = ?';
     db.query(query, id, function(err,results){
         if(err){
             console.log('error occurred:',err)
@@ -199,28 +261,38 @@ router.post('/:communityName/:rid/delete', function(req, res, next) {
     });
 });
 
+
 /**
  * INSERT COMMENT
  */
 router.post('/:communityName/:rid/insert_comments', function(req, res, next) {
     var commName = req.params.communityName;
     var id = req.params.rid;
-    var user_id = req.user[0].user_id;
     var comments = req.body.comments;
-    var date = new Date().toISOString().slice(0, 19).replace('T', ' ');
-    var query = 'INSERT INTO `test_table_comments` (`user_id`, `comments`,`date`,`community`, `test_table_id`) VALUES ?';
-    var values = [
-        [user_id, comments, date, commName, id ]
-    ];
-    db.query(query, [values], function(err,results){
-        if(err){
-            console.log('error occurred:',err)
-        } else {
-            //res.send(results);
-            console.log('values:',values);
-            res.redirect('/community/'+commName+'/'+id);
-        }
-    });
+    //var date = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    var date = moment().format('YYYY-MM-DD HH:mm:ss');
+    var comment_table_name = 'bo_' + commName + '_comment';
+    //로그인 되어 있으면
+    if(req.user){
+        var user_id = req.user[0].user_id;
+        var query = 'INSERT INTO '+comment_table_name+' (writer_id, contents, reg_date, master_idx) VALUES (?)';
+        var values = [
+            [user_id, comments, date, id]
+        ];
+        db.query(query, values, function(err,results){
+            if(err){
+                console.log('error occurred:',err)
+            } else {
+                //res.send(results);
+                console.log('values:',values);
+                res.redirect('/community/'+commName+'/'+id);
+            }
+        });
+    } else {
+        res.redirect('/login')
+    }
+
+
 });
 
 
