@@ -46,7 +46,7 @@
         <form>
             <div class="form-group">
                 <label for="commentsInputTextarea">댓글</label>
-                <textarea class="form-control" id="commentsInputTextarea" rows="2" name="comments" onclick="needLogin(<%=user%>)"></textarea>
+                <textarea class="form-control" id="commentsInputTextarea" rows="2" name="comments" onclick="needLogin(<%=user%>)" placeholder="댓글을 입력하세요."></textarea>
                 <button type="submit" class="btn btn-info btn-round float-right" formmethod="post" formaction="/community/<%=commName%>/<%=rid%>/insert_comments" <% if (!user) {%> disabled <%}%>>등록</button>
             </div>
         </form>
@@ -83,8 +83,8 @@
             <div style="display:none" class = "replyInputPart" id="comments<%=i%>">
                 <form>
                     <label for="commentsReplyInputTextarea">comments</label>
-                    <textarea class="form-control" id="commentsReplyInputTextarea" rows="1" name="commentsReply" onclick="needLogin(<%=user%>)"></textarea>
-                    <button type="submit" class="btn btn-info btn-round" formmethod="post" formaction="/community/<%=commName%>/<%=rid%>/insert_comments_reply/<%=comments[i].idx%>" <% if (!user) {%> disabled <%}%>>OK</button>
+                    <textarea class="form-control" id="commentsReplyInputTextarea" rows="1" name="commentsReply" onclick="needLogin(<%=user%>)" placeholder="댓글을 입력하세요."></textarea>
+                    <button type="submit" class="btn btn-info btn-round" formmethod="post" formaction="/community/<%=commName%>/<%=rid%>/insert_comments_reply/<%=comments[i].idx%>/<%=comments[i].writer_id%>" <% if (!user) {%> disabled <%}%>>OK</button>
                 </form>
                 <button class="hideReply btn btn-info btn-round" onclick="toggleComments(<%=i%>)">Cancel</button>
 
@@ -111,7 +111,7 @@
 
                     <strong>ㄴ</strong>
                     <img src="/img/profile_sample2.png" width="40px" height="40px" alt="imgeeee">
-                    <strong>@<%=commentsReply[j].comment_idx%> &nbsp; </strong><%=commentsReply[j].writer_id%>:  <%=commentsReply[j].contents%>&nbsp; &nbsp; &nbsp;
+                    <strong>@<%=commentsReply[j].reply_to%> &nbsp; </strong><%=commentsReply[j].writer_id%>:  <%=commentsReply[j].contents%>&nbsp; &nbsp; &nbsp;
                     <a class="text-muted"><%=moment(commentsReply[j].edit_date).format('YY-DD-MM, h:mm a')%>  &nbsp; &nbsp; &nbsp;</a>
                     <a class="btn btn-primary btn-simple btn-sm center" href="#">
                         <i class="fa fa-thumbs-o-up fa-lg"></i>2</a>
@@ -132,7 +132,7 @@
                     <form>
                         <label for="commentsReplyInputTextarea">reply</label>
                         <textarea class="form-control" id="commentsReplyInputTextarea" rows="1" name="commentsReply" onclick="needLogin(<%=user%>)"></textarea>
-                        <button type="submit" class="btn btn-info btn-round" formmethod="post" formaction="" <% if (!user) {%> disabled <%}%>>OK</button>
+                        <button type="submit" class="btn btn-info btn-round" formmethod="post" formaction="/community/<%=commName%>/<%=rid%>/insert_comments_reply_reply/<%=commentsReply[j].comment_idx%>/<%=commentsReply[j].writer_id%>" <% if (!user) {%> disabled <%}%>>OK2</button>
                     </form>
                     <button class="hideReply btn btn-info btn-round" onclick="toggleReply(<%=j%>)">Cancel</button>
 

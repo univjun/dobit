@@ -142,3 +142,5 @@ CREATE TABLE bo_free_comment_re
         PRIMARY KEY(idx)
 
         )
+
+ALTER TABLE bo_free_comment_re ADD reply_to VARCHAR(64) AFTER master_idx;

@@ -40,19 +40,6 @@ router.get('/:communityName', function(req, res, next) {
 });
 
 
-router.get('/:communityName/write', function(req, res, next) {
-    if(req.user){
-        var commName = req.params.communityName;
-        res.render('write_new',{
-            commName:commName,
-            user: req.user
-        })
-    } else {
-        res.redirect('/login');
-    }
-
-    //res.send('responsessssss');
-});
 
 
 router.get('/:communityName/:rid', function(req, res, next) {
@@ -106,6 +93,25 @@ router.get('/:communityName/:rid', function(req, res, next) {
     });
 
 });
+
+
+/**
+ * 글쓰기
+ */
+router.get('/:communityName/write', function(req, res, next) {
+    if(req.user){
+        var commName = req.params.communityName;
+        res.render('write_new',{
+            commName:commName,
+            user: req.user
+        })
+    } else {
+        res.redirect('/login');
+    }
+
+    //res.send('responsessssss');
+});
+
 
 
 //show profile
@@ -189,6 +195,9 @@ router.post('/:communityName/:rid/up_proc', function(req, res, next) {
 });
 
 
+/**
+ * EDIT
+ */
 router.get('/:communityName/:rid/edit', function(req, res, next) {
     var id = req.params.rid;
     var commName = req.params.communityName;
@@ -210,7 +219,7 @@ router.get('/:communityName/:rid/edit', function(req, res, next) {
 });
 
 /**
- * 글쓰기
+ * 글쓰기 PROC
 */
 router.post('/:communityName/write_proc', function(req, res, next) {
     var commName = req.params.communityName;
@@ -314,29 +323,60 @@ router.post('/:communityName/:rid/insert_comments', function(req, res, next) {
 /**
  * INSERT COMMENT Reply
  */
-router.post('/:communityName/:rid/insert_comments_reply/:cid', function(req, res, next) {
+router.post('/:communityName/:rid/insert_comments_reply/:cid/:tid', function(req, res, next) {
     //res.send("add reply");
     console.log(req.params.cid);
     var commName = req.params.communityName;
-    var id = req.params.rid;
-    var toId = req.params.cid;
+    var rid = req.params.rid;
+    var cid = req.params.cid;
+    var tid = req.params.tid;
     var user_id = req.user[0].user_id;
     var reply = req.body.commentsReply;
-    var date = new Date().toISOString().slice(0, 19).replace('T', ' ');
-    var query = 'INSERT INTO `test_table_comments_reply` (`user_id`, `to_id`,`reply`,`date`,`test_table_id`) VALUES ?';
+    var date = moment().format('YYYY-MM-DD HH:mm:ss');
+    var comment_re_table_name = 'bo_' + commName + '_comment_re';
+    var query = 'INSERT INTO '+comment_re_table_name+' (writer_id, contents, reg_date, comment_idx, master_idx, reply_to) VALUES (?)';
     var values = [
-        [user_id, toId, reply , date,id ]
+        [user_id, reply, date, cid, rid, tid]
     ];
-    db.query(query, [values], function(err,results){
+    db.query(query, values, function(err,results){
         if(err){
             console.log('error occurred:',err)
         } else {
             //res.send(results);
-            console.log('values:',values);
-            res.redirect('/community/'+commName+'/'+id);
+            res.redirect('/community/'+commName+'/'+rid);
         }
     });
 });
+
+/**
+ * INSERT COMMENT Reply Reply
+ */
+router.post('/:communityName/:rid/insert_comments_reply_reply/:cid/:tid', function(req, res, next) {
+    //res.send("add reply");
+    console.log(req.params.cid);
+    var commName = req.params.communityName;
+    var rid = req.params.rid;
+    var cid = req.params.cid;
+    var tid = req.params.tid;
+    var user_id = req.user[0].user_id;
+    var reply = req.body.commentsReply;
+    var date = moment().format('YYYY-MM-DD HH:mm:ss');
+    var comment_re_table_name = 'bo_' + commName + '_comment_re';
+    var query = 'INSERT INTO '+comment_re_table_name+' (writer_id, contents, reg_date, comment_idx, master_idx, reply_to) VALUES (?)';
+    var values = [
+        [user_id, reply, date, cid, rid, tid]
+    ];
+    db.query(query, values, function(err,results){
+        if(err){
+            console.log('error occurred:',err)
+        } else {
+            //res.send(results);
+            res.redirect('/community/'+commName+'/'+rid);
+        }
+    });
+});
+
+
 
 
 /**
