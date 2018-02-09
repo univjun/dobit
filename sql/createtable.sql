@@ -144,3 +144,5 @@ CREATE TABLE bo_free_comment_re
         )
 
 ALTER TABLE bo_free_comment_re ADD reply_to VARCHAR(64) AFTER master_idx;
+
+ALTER TABLE user_master ADD user_naver_id VARCHAR(64);

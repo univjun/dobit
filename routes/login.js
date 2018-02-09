@@ -1,7 +1,9 @@
 var express = require('express');
+var secret_config = require('../secret/secret_config');
 var router = express.Router();
 var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
+var NaverStrategy = require('passport-naver').Strategy;
 
 var passport = require('passport');
 var db = require('../db/mysql_db');
@@ -27,6 +29,25 @@ router.get('/', function(req, res, next) {
         res.redirect('/');
     } else {
         res.render('login', {
+            message: message,
+            user:req.user,
+            isLoggedIn: false
+        });
+    }
+
+});
+
+/* GET test page. */
+router.get('/test', function(req, res, next) {
+    var message = req.flash('loginMessage');
+
+
+    console.log(req.session);
+    //res.render('login', {message: req.flash('loginMessage')});
+    if(req.user){
+        res.redirect('/');
+    } else {
+        res.render('login_test', {
             message: message,
             user:req.user,
             isLoggedIn: false
@@ -76,13 +97,13 @@ passport.use(new LocalStrategy({passReqToCallback : true} , function(req, userna
 }));
 
 passport.use(new FacebookStrategy({
-        clientID: '1623452237717047',
-        clientSecret: 'e24c87ec5bd70e7c757aed8a8773a540',
-        callbackURL: "http://localhost:3000/login/facebook/callback"
+        clientID: secret_config.facebook.clientID,
+        clientSecret: secret_config.facebook.clientSecret,
+        callbackURL: secret_config.facebook.callbackURL
     },
     function(accessToken, refreshToken, profile, cb) {
-        console.log(profile);
-        var query = "SELECT * FROM user_master WHERE user_facebook_id = ?"
+        console.log('facebook:',profile);
+        var query = "SELECT * FROM user_master WHERE user_facebook_id = ?";
         var facebookId = profile.id;
         var displayName = profile.displayName;
         db.query(query, [facebookId], function(err, rows){
@@ -119,6 +140,49 @@ passport.use(new FacebookStrategy({
 ));
 
 
+passport.use(new NaverStrategy({
+    clientID: secret_config.naver.clientID,
+    clientSecret: secret_config.naver.clientSecret,
+    callbackURL: secret_config.naver.callbackURL
+    },
+    function (accessToken, refreshToken, profile, done){
+        console.log('naver Profile: ',profile);
+        var query = "SELECT * FROM user_master WHERE user_naver_id = ?"
+        var naverId = profile.id;
+        var displayName = profile.displayName;
+        db.query(query, [naverId], function(err, rows){
+            if(err){
+                console.log('failed to connect db', err);
+            }
+            if(!rows.length){
+
+                var query = "INSERT INTO `user_master` (`user_displayName`, `user_naver_id`) VALUES ?";
+                var values = [
+                    [displayName, naverId]
+                ];
+                db.query(query, [values], function(err, resultOfInsert){
+                    if(err){
+                        console.log('failed to insert into db',err);
+                    }
+                    console.log('insert success and insert result is:',resultOfInsert);
+
+                    db.query("SELECT * FROM user_master WHERE user_naver_id = ?", [naverId], function(err, result){
+                        if(err){
+                            console.log('failed to select * from insertId');
+                        }
+
+                        return done(null, result[0]);
+                    });
+
+                });
+            } else {
+                return done(null, rows[0]);
+            }
+        })
+
+    }
+));
+
 // router.post('/login_proc', passport.authenticate('local',{
 //     successRedirect: '/',
 //     failureRedirect:'/login',
@@ -137,12 +201,21 @@ router.post('/login_proc', function(req, res, next){
 
 
 router.get('/facebook', passport.authenticate('facebook'));
+router.get('/naver', passport.authenticate('naver'));
+
 
 router.get('/facebook/callback',
     passport.authenticate('facebook',
         {
             successRedirect: '/',
-            failureRedirect: '/login'
+            failureRedirect: '/'
+        }))
+
+router.get('/naver/callback',
+    passport.authenticate('naver',
+        {
+            successRedirect: '/',
+            failureRedirect: '/'
         }));
 
 module.exports = router;
