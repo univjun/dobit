@@ -65,7 +65,7 @@
                         <button type="button" class="btn btn-sm btn-block bg-transparent" onclick="document.getElementById('id01').style.display='block'" style="width:auto;">로그인
                         </button>
                         <!-- The Modal -->
-                        <div id="id01" class="modal">
+                        <div id="id01" class="modal" <% if (message.length > 0 ) { %> style="display: block" <% } %>>
 
                             <!-- Modal Content -->
                             <div class="modal-content animate">
@@ -132,9 +132,12 @@
                                                             <span class="input-group-addon"><i class="fa fa-lock"></i></span>
                                                             <input  type="password" class="form-control" name="password" placeholder="Password">
                                                         </div>
-                                                        <span class="help-block">Password error</span>
 
-                                                        <button class="btn btn-lg btn-primary btn-block" type="submit">Login22</button>
+                                                        <% if (message.length > 0) { %>
+                                                        <div class="alert alert-danger"><%= message %></div>
+                                                        <% } %>
+
+                                                        <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
                                                     </form>
                                                 </div>
                                             </div>

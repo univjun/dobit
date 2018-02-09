@@ -130,7 +130,7 @@ router.post('/login_proc', function(req, res, next){
     console.log('currentURL: ',req.headers.referer);
     passport.authenticate('local', {
         successRedirect: req.headers.referer,
-        failureRedirect:'/login',
+        failureRedirect: req.headers.referer,
         failureFlash: true
     })(req,res,next);
 });

@@ -12,6 +12,7 @@ var moment = require('moment');
 // });
 router.get('/:communityName', function(req, res, next) {
     var commName = req.params.communityName; // free
+    var message = req.flash('loginMessage');
 
     var table_name = 'bo_' + commName + '_master'; //bo_free_master
     console.log(table_name);
@@ -32,12 +33,31 @@ router.get('/:communityName', function(req, res, next) {
                 commName: commName,
                 records: records,
                 isLoggedIn: isLoggedIn,
-                user: req.user
+                user: req.user,
+                message: message
             });
         }
 
     });
 });
+
+/**
+ * 글쓰기
+ */
+router.get('/:communityName/write', function(req, res, next) {
+    if(req.user){
+        var commName = req.params.communityName;
+        res.render('write_new',{
+            commName:commName,
+            user: req.user
+        })
+    } else {
+        res.send('잘못된 접근입니다.');
+    }
+
+    //res.send('responsessssss');
+});
+
 
 
 
@@ -94,23 +114,6 @@ router.get('/:communityName/:rid', function(req, res, next) {
 
 });
 
-
-/**
- * 글쓰기
- */
-router.get('/:communityName/write', function(req, res, next) {
-    if(req.user){
-        var commName = req.params.communityName;
-        res.render('write_new',{
-            commName:commName,
-            user: req.user
-        })
-    } else {
-        res.redirect('/login');
-    }
-
-    //res.send('responsessssss');
-});
 
 
 
