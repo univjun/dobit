@@ -7,11 +7,10 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var flash = require('connect-flash');
+var Chart = require('chart.js');
 
 var test = require('./routes/test');
-
-
-
+var chart = require('./routes/chart');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var login = require('./routes/login');
@@ -21,6 +20,8 @@ var signup = require('./routes/signup');
 // var community = require('./routes/community');
 var community = require('./routes/community');
 var logout = require('./routes/logout');
+
+
 var moment = require('moment');
 var shortDateFormat = "ddd @ h:mmA";
 
@@ -54,8 +55,7 @@ app.use(flash());
 
 
 app.use('/', index);
-
-
+app.use('/chart', chart);
 app.use('/test', test);
 app.use('/users', users);
 app.use('/login', login);
