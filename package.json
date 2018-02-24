@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "body-parser": "~1.18.2",
+    "chart.js": "^2.7.1",
     "connect-flash": "^0.1.1",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
@@ -20,6 +21,7 @@
     "mysql": "^2.15.0",
     "passport": "^0.4.0",
     "passport-facebook": "^2.1.1",
+    "passport-kakao": "0.0.5",
     "passport-local": "^1.0.0",
     "passport-naver": "^1.0.6",
     "serve-favicon": "~2.4.5",

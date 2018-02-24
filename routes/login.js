@@ -4,6 +4,7 @@ var router = express.Router();
 var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
 var NaverStrategy = require('passport-naver').Strategy;
+var KakaoStrategy = require('passport-kakao').Strategy;
 
 var passport = require('passport');
 var db = require('../db/mysql_db');
@@ -146,8 +147,8 @@ passport.use(new NaverStrategy({
     callbackURL: secret_config.naver.callbackURL
     },
     function (accessToken, refreshToken, profile, done){
-        console.log('naver Profile: ',profile);
-        var query = "SELECT * FROM user_master WHERE user_naver_id = ?"
+        console.log('naver Profile is: ',profile);
+        var query = "SELECT * FROM user_master WHERE user_naver_id = ?";
         var naverId = profile.id;
         var displayName = profile.displayName;
         db.query(query, [naverId], function(err, rows){
@@ -189,6 +190,51 @@ passport.use(new NaverStrategy({
 //     failureFlash: true
 // }));
 
+passport.use(new KakaoStrategy({
+        clientID : secret_config.kakao.clientID,
+        ClientSecret : secret_config.kakao.clientSecret,
+        callbackURL : secret_config.kakao.callbackURL
+    },
+    function (accessToken, refreshToken, profile, done) {
+        console.log('kakao Profile is: ',profile);
+        var query = "SELECT * FROM user_master WHERE user_kakao_id = ?";
+        var kakaoId = profile.id;
+        var displayName = profile.displayName;
+        db.query(query, [kakaoId], function(err, rows){
+            if(err){
+                console.log('failed to connect db', err);
+            }
+            if(!rows.length){
+
+                var query = "INSERT INTO `user_master` (`user_displayName`, `user_kakao_id`) VALUES ?";
+                var values = [
+                    [displayName, kakaoId]
+                ];
+                db.query(query, [values], function(err, resultOfInsert){
+                    if(err){
+                        console.log('failed to insert into db',err);
+                    }
+                    console.log('insert success and insert result is:',resultOfInsert);
+
+                    db.query("SELECT * FROM user_master WHERE user_kakao_id = ?", [kakaoId], function(err, result){
+                        if(err){
+                            console.log('failed to select * from insertId');
+                        }
+
+                        return done(null, result[0]);
+                    });
+
+                });
+            } else {
+                return done(null, rows[0]);
+            }
+        })
+
+
+    }
+
+));
+
 
 router.post('/login_proc', function(req, res, next){
     console.log('currentURL: ',req.headers.referer);
@@ -202,7 +248,7 @@ router.post('/login_proc', function(req, res, next){
 
 router.get('/facebook', passport.authenticate('facebook'));
 router.get('/naver', passport.authenticate('naver'));
-
+router.get('/kakao', passport.authenticate('kakao'));
 
 router.get('/facebook/callback',
     passport.authenticate('facebook',
@@ -213,6 +259,13 @@ router.get('/facebook/callback',
 
 router.get('/naver/callback',
     passport.authenticate('naver',
+        {
+            successRedirect: '/',
+            failureRedirect: '/'
+        }));
+
+router.get('/kakao/callback',
+    passport.authenticate('kakao',
         {
             successRedirect: '/',
             failureRedirect: '/'
